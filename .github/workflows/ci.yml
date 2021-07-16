@@ -10,25 +10,23 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Install Go
+      - uses: actions/checkout@v2
+        
+      - name: Set up Go
         uses: actions/setup-go@v2
         with:
-          go-version: 1.16.4
-
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Fetch required Go modules
-        run:  go mod download
+          go-version: 1.16
 
       - name: Build
         run:  go build -v ./...
-
+        
+      - name: Run tests
+        run:  go test -cover ./...
+        
       - name: Build Docker image
         uses: docker/build-push-action@v2
         with:
           push: false
           tags: ${{ github.event.repository.name }}:latest, ${{ github.repository }}:latest
 
-      - name: Run functional tests
-        run:  go test -cover ./...
+      
