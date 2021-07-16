@@ -8,8 +8,8 @@ RUN go mod download
 
 COPY *.go .
 
-RUN go build -o /docker-go-service
+RUN go build -o /go-service
 
 EXPOSE 8080
 
-CMD [ "/docker-go-service" ]
+CMD [ "/go-service" ]
